@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package nestrisdk_test
+package nestri_test
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/nestrilabs/nestri-go-sdk"
 	"github.com/nestrilabs/nestri-go-sdk/internal"
-	"github.com/nestrilabs/nestri-go-sdk/option"
+	"github.com/nestrilabs/nestri-go-sdk/nestri"
 )
 
 type closureTransport struct {
@@ -25,8 +25,8 @@ func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 func TestUserAgentHeader(t *testing.T) {
 	var userAgent string
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					userAgent = req.Header.Get("User-Agent")
@@ -45,8 +45,8 @@ func TestUserAgentHeader(t *testing.T) {
 
 func TestRetryAfter(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					retryCountHeaders = append(retryCountHeaders, req.Header.Get("X-Stainless-Retry-Count"))
@@ -78,8 +78,8 @@ func TestRetryAfter(t *testing.T) {
 
 func TestDeleteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					retryCountHeaders = append(retryCountHeaders, req.Header.Get("X-Stainless-Retry-Count"))
@@ -92,7 +92,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 				},
 			},
 		}),
-		option.WithHeaderDel("X-Stainless-Retry-Count"),
+		nestri.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
 	res, err := client.Machines.Get(context.Background(), "REPLACE_ME")
 	if err == nil || res != nil {
@@ -107,8 +107,8 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 
 func TestOverwriteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					retryCountHeaders = append(retryCountHeaders, req.Header.Get("X-Stainless-Retry-Count"))
@@ -121,7 +121,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 				},
 			},
 		}),
-		option.WithHeader("X-Stainless-Retry-Count", "42"),
+		nestri.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
 	res, err := client.Machines.Get(context.Background(), "REPLACE_ME")
 	if err == nil || res != nil {
@@ -136,8 +136,8 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 
 func TestRetryAfterMs(t *testing.T) {
 	attempts := 0
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					attempts++
@@ -161,8 +161,8 @@ func TestRetryAfterMs(t *testing.T) {
 }
 
 func TestContextCancel(t *testing.T) {
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					<-req.Context().Done()
@@ -180,8 +180,8 @@ func TestContextCancel(t *testing.T) {
 }
 
 func TestContextCancelDelay(t *testing.T) {
-	client := nestrisdk.NewClient(
-		option.WithHTTPClient(&http.Client{
+	client := nestri.NewClient(
+		nestri.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
 					<-req.Context().Done()
@@ -207,8 +207,8 @@ func TestContextDeadline(t *testing.T) {
 	defer cancel()
 
 	go func() {
-		client := nestrisdk.NewClient(
-			option.WithHTTPClient(&http.Client{
+		client := nestri.NewClient(
+			nestri.WithHTTPClient(&http.Client{
 				Transport: &closureTransport{
 					fn: func(req *http.Request) (*http.Response, error) {
 						<-req.Context().Done()

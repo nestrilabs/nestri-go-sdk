@@ -1,8 +1,8 @@
-# Nestri Go API Library
+# Nestri API Library
 
 <a href="https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk"><img src="https://pkg.go.dev/badge/github.com/nestrilabs/nestri-go-sdk.svg" alt="Go Reference"></a>
 
-The Nestri Go library provides convenient access to [the Nestri REST
+The Nestri library provides convenient access to [the Nestri REST
 API](https://docs.nestri.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ```go
 import (
-	"github.com/nestrilabs/nestri-go-sdk" // imported as nestrisdk
+	"github.com/nestrilabs/nestri-go-sdk" // imported as nestri
 )
 ```
 
@@ -45,12 +45,12 @@ import (
 	"fmt"
 
 	"github.com/nestrilabs/nestri-go-sdk"
-	"github.com/nestrilabs/nestri-go-sdk/option"
+	"github.com/nestrilabs/nestri-go-sdk/nestri"
 )
 
 func main() {
-	client := nestrisdk.NewClient(
-		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("BEARER_TOKEN")
+	client := nestri.NewClient(
+		nestri.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("BEARER_TOKEN")
 	)
 	machine, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
 	if err != nil {
@@ -75,18 +75,18 @@ To send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](
 
 ```go
 params := FooParams{
-	Name: nestrisdk.F("hello"),
+	Name: nestri.F("hello"),
 
 	// Explicitly send `"description": null`
-	Description: nestrisdk.Null[string](),
+	Description: nestri.Null[string](),
 
-	Point: nestrisdk.F(nestrisdk.Point{
-		X: nestrisdk.Int(0),
-		Y: nestrisdk.Int(1),
+	Point: nestri.F(nestri.Point{
+		X: nestri.Int(0),
+		Y: nestri.Int(1),
 
 		// In cases where the API specifies a given type,
 		// but you want to send something else, use `Raw`:
-		Z: nestrisdk.Raw[int64](0.01), // sends a float
+		Z: nestri.Raw[int64](0.01), // sends a float
 	}),
 }
 ```
@@ -135,25 +135,25 @@ body := res.JSON.ExtraFields["my_unexpected_field"].Raw()
 ### RequestOptions
 
 This library uses the functional options pattern. Functions defined in the
-`option` package return a `RequestOption`, which is a closure that mutates a
+`nestri` package return a `RequestOption`, which is a closure that mutates a
 `RequestConfig`. These options can be supplied to the client or at individual
 requests. For example:
 
 ```go
-client := nestrisdk.NewClient(
+client := nestri.NewClient(
 	// Adds a header to every request made by the client
-	option.WithHeader("X-Some-Header", "custom_header_info"),
+	nestri.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
 client.Machines.Get(context.TODO(), ...,
 	// Override the header
-	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
+	nestri.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
-	option.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
+	nestri.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk/option).
+See the [full list of request options](https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk/nestri).
 
 ### Pagination
 
@@ -167,7 +167,7 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 ### Errors
 
 When the API returns a non-success status code, we return an error with type
-`*nestrisdk.Error`. This contains the `StatusCode`, `*http.Request`, and
+`*nestri.Error`. This contains the `StatusCode`, `*http.Request`, and
 `*http.Response` values of the request, as well as the JSON of the error body
 (much like other response objects in the SDK).
 
@@ -176,7 +176,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 ```go
 _, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
 if err != nil {
-	var apierr *nestrisdk.Error
+	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
@@ -193,7 +193,7 @@ if HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.
 Requests do not time out by default; use context to configure a timeout for a request lifecycle.
 
 Note that if a request is [retried](#retries), the context timeout does not start over.
-To set a per-retry timeout, use `option.WithRequestTimeout()`.
+To set a per-retry timeout, use `nestri.WithRequestTimeout()`.
 
 ```go
 // This sets the timeout for the request, including all the retries.
@@ -203,7 +203,7 @@ client.Machines.Get(
 	ctx,
 	"REPLACE_ME",
 	// This sets the per-retry timeout
-	option.WithRequestTimeout(20*time.Second),
+	nestri.WithRequestTimeout(20*time.Second),
 )
 ```
 
@@ -217,7 +217,7 @@ The file name and content-type can be customized by implementing `Name() string`
 string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
 file returned by `os.Open` will be sent with the file name on disk.
 
-We also provide a helper `nestrisdk.FileParam(reader io.Reader, filename string, contentType string)`
+We also provide a helper `nestri.FileParam(reader io.Reader, filename string, contentType string)`
 which can be used to wrap any `io.Reader` with the appropriate file name and content type.
 
 ### Retries
@@ -230,15 +230,15 @@ You can use the `WithMaxRetries` option to configure or disable this:
 
 ```go
 // Configure the default for all requests:
-client := nestrisdk.NewClient(
-	option.WithMaxRetries(0), // default is 2
+client := nestri.NewClient(
+	nestri.WithMaxRetries(0), // default is 2
 )
 
 // Override per-request:
 client.Machines.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	option.WithMaxRetries(5),
+	nestri.WithMaxRetries(5),
 )
 ```
 
@@ -270,17 +270,17 @@ if err != nil {
 
 #### Undocumented request params
 
-To make requests using undocumented parameters, you may use either the `option.WithQuerySet()`
-or the `option.WithJSONSet()` methods.
+To make requests using undocumented parameters, you may use either the `nestri.WithQuerySet()`
+or the `nestri.WithJSONSet()` methods.
 
 ```go
 params := FooNewParams{
-    ID:   nestrisdk.F("id_xxxx"),
-    Data: nestrisdk.F(FooNewParamsData{
-        FirstName: nestrisdk.F("John"),
+    ID:   nestri.F("id_xxxx"),
+    Data: nestri.F(FooNewParamsData{
+        FirstName: nestri.F("John"),
     }),
 }
-client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
+client.Foo.New(context.Background(), params, nestri.WithJSONSet("data.last_name", "Doe"))
 ```
 
 #### Undocumented response properties
@@ -293,11 +293,11 @@ Any fields that are not present on the response struct will be saved and can be 
 
 ### Middleware
 
-We provide `option.WithMiddleware` which applies the given
+We provide `nestri.WithMiddleware` which applies the given
 middleware to requests.
 
 ```go
-func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, err error) {
+func Logger(req *http.Request, next nestri.MiddlewareNext) (res *http.Response, err error) {
 	// Before the request
 	start := time.Now()
 	LogReq(req)
@@ -312,19 +312,19 @@ func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, 
     return res, err
 }
 
-client := nestrisdk.NewClient(
-	option.WithMiddleware(Logger),
+client := nestri.NewClient(
+	nestri.WithMiddleware(Logger),
 )
 ```
 
 When multiple middlewares are provided as variadic arguments, the middlewares
-are applied left to right. If `option.WithMiddleware` is given
+are applied left to right. If `nestri.WithMiddleware` is given
 multiple times, for example first in the client then the method, the
 middleware in the client will run first and the middleware given in the method
 will run next.
 
 You may also replace the default `http.Client` with
-`option.WithHTTPClient(client)`. Only one http client is
+`nestri.WithHTTPClient(client)`. Only one http client is
 accepted (this overwrites any previous client) and receives requests after any
 middleware has been applied.
 

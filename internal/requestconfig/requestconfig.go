@@ -183,11 +183,11 @@ type RequestConfig struct {
 	Body         io.Reader
 }
 
-// middleware is exactly the same type as the Middleware type found in the [option] package,
+// middleware is exactly the same type as the Middleware type found in the [nestri] package,
 // but it is redeclared here for circular dependency issues.
 type middleware = func(*http.Request, middlewareNext) (*http.Response, error)
 
-// middlewareNext is exactly the same type as the MiddlewareNext type found in the [option] package,
+// middlewareNext is exactly the same type as the MiddlewareNext type found in the [nestri] package,
 // but it is redeclared here for circular dependency issues.
 type middlewareNext = func(*http.Request) (*http.Response, error)
 

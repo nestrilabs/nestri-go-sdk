@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package option
+package nestri
 
 import (
 	"bytes"
@@ -68,7 +68,7 @@ func WithMiddleware(middlewares ...Middleware) RequestOption {
 // WithMaxRetries panics when retries is negative.
 func WithMaxRetries(retries int) RequestOption {
 	if retries < 0 {
-		panic("option: cannot have fewer than 0 retries")
+		panic("nestri: cannot have fewer than 0 retries")
 	}
 	return func(r *requestconfig.RequestConfig) error {
 		r.MaxRetries = retries
