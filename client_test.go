@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 		}),
 	)
 	client.Machines.Get(context.Background(), "REPLACE_ME")
-	if userAgent != fmt.Sprintf("NestriSDK/Go %s", internal.PackageVersion) {
+	if userAgent != fmt.Sprintf("Nestri/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
 }
