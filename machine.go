@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/nestrilabs/nestri-go-sdk/internal/apijson"
-	"github.com/nestrilabs/nestri-go-sdk/internal/param"
 	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
 	"github.com/nestrilabs/nestri-go-sdk/option"
 )
@@ -30,14 +29,6 @@ type MachineService struct {
 func NewMachineService(opts ...option.RequestOption) (r *MachineService) {
 	r = &MachineService{}
 	r.Options = opts
-	return
-}
-
-// Create a machine.
-func (r *MachineService) New(ctx context.Context, body MachineNewParams, opts ...option.RequestOption) (res *MachineNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "machine"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -71,41 +62,6 @@ func (r *MachineService) Delete(ctx context.Context, id string, opts ...option.R
 	path := fmt.Sprintf("machine/%s", id)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
 	return
-}
-
-type MachineNewResponse struct {
-	Data MachineNewResponseData `json:"data,required"`
-	JSON machineNewResponseJSON `json:"-"`
-}
-
-// machineNewResponseJSON contains the JSON metadata for the struct
-// [MachineNewResponse]
-type machineNewResponseJSON struct {
-	Data        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *MachineNewResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r machineNewResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type MachineNewResponseData string
-
-const (
-	MachineNewResponseDataOk MachineNewResponseData = "ok"
-)
-
-func (r MachineNewResponseData) IsKnown() bool {
-	switch r {
-	case MachineNewResponseDataOk:
-		return true
-	}
-	return false
 }
 
 type MachineGetResponse struct {
@@ -249,15 +205,4 @@ func (r MachineDeleteResponseData) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type MachineNewParams struct {
-	// The machine's fingerprint, derived from the machine's Linux machine ID.
-	Fingerprint param.Field[string] `json:"fingerprint,required"`
-	// Hostname of the machine
-	Hostname param.Field[string] `json:"hostname,required"`
-}
-
-func (r MachineNewParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
 }
