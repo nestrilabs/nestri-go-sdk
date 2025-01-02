@@ -45,12 +45,12 @@ import (
 	"fmt"
 
 	"github.com/nestrilabs/nestri-go-sdk"
-	"github.com/nestrilabs/nestri-go-sdk/nestri"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 func main() {
 	client := nestri.NewClient(
-		nestri.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("BEARER_TOKEN")
+		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("BEARER_TOKEN")
 	)
 	machine, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
 	if err != nil {
@@ -135,25 +135,25 @@ body := res.JSON.ExtraFields["my_unexpected_field"].Raw()
 ### RequestOptions
 
 This library uses the functional options pattern. Functions defined in the
-`nestri` package return a `RequestOption`, which is a closure that mutates a
+`option` package return a `RequestOption`, which is a closure that mutates a
 `RequestConfig`. These options can be supplied to the client or at individual
 requests. For example:
 
 ```go
 client := nestri.NewClient(
 	// Adds a header to every request made by the client
-	nestri.WithHeader("X-Some-Header", "custom_header_info"),
+	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
 client.Machines.Get(context.TODO(), ...,
 	// Override the header
-	nestri.WithHeader("X-Some-Header", "some_other_custom_header_info"),
+	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
-	nestri.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
+	option.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk/nestri).
+See the [full list of request options](https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk/option).
 
 ### Pagination
 
@@ -193,7 +193,7 @@ if HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.
 Requests do not time out by default; use context to configure a timeout for a request lifecycle.
 
 Note that if a request is [retried](#retries), the context timeout does not start over.
-To set a per-retry timeout, use `nestri.WithRequestTimeout()`.
+To set a per-retry timeout, use `option.WithRequestTimeout()`.
 
 ```go
 // This sets the timeout for the request, including all the retries.
@@ -203,7 +203,7 @@ client.Machines.Get(
 	ctx,
 	"REPLACE_ME",
 	// This sets the per-retry timeout
-	nestri.WithRequestTimeout(20*time.Second),
+	option.WithRequestTimeout(20*time.Second),
 )
 ```
 
@@ -231,14 +231,14 @@ You can use the `WithMaxRetries` option to configure or disable this:
 ```go
 // Configure the default for all requests:
 client := nestri.NewClient(
-	nestri.WithMaxRetries(0), // default is 2
+	option.WithMaxRetries(0), // default is 2
 )
 
 // Override per-request:
 client.Machines.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	nestri.WithMaxRetries(5),
+	option.WithMaxRetries(5),
 )
 ```
 
@@ -270,8 +270,8 @@ if err != nil {
 
 #### Undocumented request params
 
-To make requests using undocumented parameters, you may use either the `nestri.WithQuerySet()`
-or the `nestri.WithJSONSet()` methods.
+To make requests using undocumented parameters, you may use either the `option.WithQuerySet()`
+or the `option.WithJSONSet()` methods.
 
 ```go
 params := FooNewParams{
@@ -280,7 +280,7 @@ params := FooNewParams{
         FirstName: nestri.F("John"),
     }),
 }
-client.Foo.New(context.Background(), params, nestri.WithJSONSet("data.last_name", "Doe"))
+client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
 ```
 
 #### Undocumented response properties
@@ -293,11 +293,11 @@ Any fields that are not present on the response struct will be saved and can be 
 
 ### Middleware
 
-We provide `nestri.WithMiddleware` which applies the given
+We provide `option.WithMiddleware` which applies the given
 middleware to requests.
 
 ```go
-func Logger(req *http.Request, next nestri.MiddlewareNext) (res *http.Response, err error) {
+func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, err error) {
 	// Before the request
 	start := time.Now()
 	LogReq(req)
@@ -313,18 +313,18 @@ func Logger(req *http.Request, next nestri.MiddlewareNext) (res *http.Response, 
 }
 
 client := nestri.NewClient(
-	nestri.WithMiddleware(Logger),
+	option.WithMiddleware(Logger),
 )
 ```
 
 When multiple middlewares are provided as variadic arguments, the middlewares
-are applied left to right. If `nestri.WithMiddleware` is given
+are applied left to right. If `option.WithMiddleware` is given
 multiple times, for example first in the client then the method, the
 middleware in the client will run first and the middleware given in the method
 will run next.
 
 You may also replace the default `http.Client` with
-`nestri.WithHTTPClient(client)`. Only one http client is
+`option.WithHTTPClient(client)`. Only one http client is
 accepted (this overwrites any previous client) and receives requests after any
 middleware has been applied.
 

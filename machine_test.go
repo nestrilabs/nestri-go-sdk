@@ -10,7 +10,7 @@ import (
 
 	"github.com/nestrilabs/nestri-go-sdk"
 	"github.com/nestrilabs/nestri-go-sdk/internal/testutil"
-	"github.com/nestrilabs/nestri-go-sdk/nestri"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 func TestMachineNew(t *testing.T) {
@@ -22,8 +22,8 @@ func TestMachineNew(t *testing.T) {
 		return
 	}
 	client := nestri.NewClient(
-		nestri.WithBaseURL(baseURL),
-		nestri.WithBearerToken("My Bearer Token"),
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Machines.New(context.TODO(), nestri.MachineNewParams{
 		Fingerprint: nestri.F("183ded44-24d0-480e-9908-c022eff8d111"),
@@ -47,8 +47,8 @@ func TestMachineGet(t *testing.T) {
 		return
 	}
 	client := nestri.NewClient(
-		nestri.WithBaseURL(baseURL),
-		nestri.WithBearerToken("My Bearer Token"),
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Machines.Get(context.TODO(), "mchn_XXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
@@ -69,8 +69,8 @@ func TestMachineList(t *testing.T) {
 		return
 	}
 	client := nestri.NewClient(
-		nestri.WithBaseURL(baseURL),
-		nestri.WithBearerToken("My Bearer Token"),
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Machines.List(context.TODO())
 	if err != nil {
@@ -91,8 +91,8 @@ func TestMachineDelete(t *testing.T) {
 		return
 	}
 	client := nestri.NewClient(
-		nestri.WithBaseURL(baseURL),
-		nestri.WithBearerToken("My Bearer Token"),
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Machines.Delete(context.TODO(), "mchn_XXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {

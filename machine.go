@@ -11,7 +11,7 @@ import (
 	"github.com/nestrilabs/nestri-go-sdk/internal/apijson"
 	"github.com/nestrilabs/nestri-go-sdk/internal/param"
 	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
-	"github.com/nestrilabs/nestri-go-sdk/nestri"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 // MachineService contains methods and other services that help with interacting
@@ -21,20 +21,20 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewMachineService] method instead.
 type MachineService struct {
-	Options []nestri.RequestOption
+	Options []option.RequestOption
 }
 
 // NewMachineService generates a new service that applies the given options to each
 // request. These options are applied after the parent client's options (if there
 // is one), and before any request-specific options.
-func NewMachineService(opts ...nestri.RequestOption) (r *MachineService) {
+func NewMachineService(opts ...option.RequestOption) (r *MachineService) {
 	r = &MachineService{}
 	r.Options = opts
 	return
 }
 
 // Create a machine.
-func (r *MachineService) New(ctx context.Context, body MachineNewParams, opts ...nestri.RequestOption) (res *MachineNewResponse, err error) {
+func (r *MachineService) New(ctx context.Context, body MachineNewParams, opts ...option.RequestOption) (res *MachineNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "machine"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -42,7 +42,7 @@ func (r *MachineService) New(ctx context.Context, body MachineNewParams, opts ..
 }
 
 // Get the machine with the given ID.
-func (r *MachineService) Get(ctx context.Context, id string, opts ...nestri.RequestOption) (res *MachineGetResponse, err error) {
+func (r *MachineService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *MachineGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
@@ -54,7 +54,7 @@ func (r *MachineService) Get(ctx context.Context, id string, opts ...nestri.Requ
 }
 
 // List the current user's machines.
-func (r *MachineService) List(ctx context.Context, opts ...nestri.RequestOption) (res *MachineListResponse, err error) {
+func (r *MachineService) List(ctx context.Context, opts ...option.RequestOption) (res *MachineListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "machine"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -62,7 +62,7 @@ func (r *MachineService) List(ctx context.Context, opts ...nestri.RequestOption)
 }
 
 // Delete the machine with the given ID.
-func (r *MachineService) Delete(ctx context.Context, id string, opts ...nestri.RequestOption) (res *MachineDeleteResponse, err error) {
+func (r *MachineService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *MachineDeleteResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
