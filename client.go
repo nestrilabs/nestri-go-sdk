@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/requestconfig"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 // Client creates a struct with services and top level methods that help with
