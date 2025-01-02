@@ -17,15 +17,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/apierror"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/apiform"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/apiquery"
+	"github.com/nestrilabs/nestri-go-sdk/internal"
+	"github.com/nestrilabs/nestri-go-sdk/internal/apierror"
+	"github.com/nestrilabs/nestri-go-sdk/internal/apiform"
+	"github.com/nestrilabs/nestri-go-sdk/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
 	return map[string]string{
-		"User-Agent": fmt.Sprintf("NestriSDK/Go %s", internal.PackageVersion),
+		"User-Agent": fmt.Sprintf("Nestri/Go %s", internal.PackageVersion),
 	}
 }
 

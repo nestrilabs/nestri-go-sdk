@@ -11,15 +11,15 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/requestconfig"
+	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
-// RequestOption is an option for the requests made by the nestri-sdk API Client
+// RequestOption is an option for the requests made by the nestri API Client
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/stainless-sdks/nestri-sdk-go#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk#readme-requestoptions
 type RequestOption = func(*requestconfig.RequestConfig) error
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.

@@ -1,25 +1,33 @@
-# Nestri SDK Go API Library
+# Nestri Go API Library
 
-<a href="https://pkg.go.dev/github.com/stainless-sdks/nestri-sdk-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/nestri-sdk-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk"><img src="https://pkg.go.dev/badge/github.com/nestrilabs/nestri-go-sdk.svg" alt="Go Reference"></a>
 
-The Nestri SDK Go library provides convenient access to [the Nestri SDK REST
-API](https://docs.nestri-sdk.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+The Nestri Go library provides convenient access to [the Nestri REST
+API](https://docs.nestri.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
-	"github.com/stainless-sdks/nestri-sdk-go" // imported as nestrisdk
+	"github.com/nestrilabs/nestri-go-sdk" // imported as nestrisdk
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
 
+<!-- x-release-please-start-version -->
+
 ```sh
-go get -u 'github.com/stainless-sdks/nestri-sdk-go@v0.0.1-alpha.0'
+go get -u 'github.com/nestrilabs/nestri-go-sdk@v0.1.0-alpha.1'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -36,8 +44,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/stainless-sdks/nestri-sdk-go"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 func main() {
@@ -145,7 +153,7 @@ client.Machines.Get(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/nestri-sdk-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk/option).
 
 ### Pagination
 
@@ -329,7 +337,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/nestri-sdk-go/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/nestrilabs/nestri-go-sdk/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

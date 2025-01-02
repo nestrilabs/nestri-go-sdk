@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/requestconfig"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 // Client creates a struct with services and top level methods that help with
-// interacting with the nestri-sdk API. You should not instantiate this client
+// interacting with the nestri API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options  []option.RequestOption

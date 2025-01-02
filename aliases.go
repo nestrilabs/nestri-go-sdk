@@ -3,7 +3,7 @@
 package nestrisdk
 
 import (
-	"github.com/stainless-sdks/nestri-sdk-go/internal/apierror"
+	"github.com/nestrilabs/nestri-go-sdk/internal/apierror"
 )
 
 type Error = apierror.Error

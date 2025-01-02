@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/apijson"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/param"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/requestconfig"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk/internal/apijson"
+	"github.com/nestrilabs/nestri-go-sdk/internal/param"
+	"github.com/nestrilabs/nestri-go-sdk/internal/requestconfig"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 // MachineService contains methods and other services that help with interacting
-// with the nestri-sdk API.
+// with the nestri API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
