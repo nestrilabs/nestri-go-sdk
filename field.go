@@ -1,4 +1,4 @@
-package nestrisdk
+package nestri
 
 import (
 	"github.com/nestrilabs/nestri-go-sdk/internal/param"
