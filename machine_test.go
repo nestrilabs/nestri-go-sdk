@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/nestri-sdk-go"
-	"github.com/stainless-sdks/nestri-sdk-go/internal/testutil"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk"
+	"github.com/nestrilabs/nestri-go-sdk/internal/testutil"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 func TestMachineNew(t *testing.T) {

@@ -41,7 +41,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```sh
-$ go mod edit -replace github.com/stainless-sdks/nestri-sdk-go=/path/to/nestri-sdk-go
+$ go mod edit -replace github.com/nestrilabs/nestri-go-sdk=/path/to/nestri-go-sdk
 ```
 
 ## Running tests

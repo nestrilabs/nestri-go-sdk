@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/param"
+	"github.com/nestrilabs/nestri-go-sdk/internal/param"
 )
 
 type Struct struct {
