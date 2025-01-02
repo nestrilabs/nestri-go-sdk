@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stainless-sdks/nestri-sdk-go/internal/param"
+	"github.com/nestrilabs/nestri-go-sdk/internal/param"
 )
 
 var encoders sync.Map // map[reflect.Type]encoderFunc

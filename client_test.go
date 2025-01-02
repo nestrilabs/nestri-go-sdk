@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/nestri-sdk-go"
-	"github.com/stainless-sdks/nestri-sdk-go/internal"
-	"github.com/stainless-sdks/nestri-sdk-go/option"
+	"github.com/nestrilabs/nestri-go-sdk"
+	"github.com/nestrilabs/nestri-go-sdk/internal"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 type closureTransport struct {
