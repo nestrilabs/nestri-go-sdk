@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-01-02)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* **api:** api update ([#12](https://github.com/nestrilabs/nestri-go-sdk/issues/12)) ([5311b5d](https://github.com/nestrilabs/nestri-go-sdk/commit/5311b5d9effcca9343c8c8f14bd198ddb6ff146f))
+
 ## 0.1.0-alpha.3 (2025-01-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
