@@ -1,4 +1,4 @@
-module github.com/nestrilabs/nestri-sdk-go
+module github.com/stainless-sdks/nestri-sdk-go
 
 go 1.21
 
