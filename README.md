@@ -1,9 +1,9 @@
-# Nestri SDK Go API Library
+# Nestri Go API Library
 
 <a href="https://pkg.go.dev/github.com/nestrilabs/nestri-go-sdk"><img src="https://pkg.go.dev/badge/github.com/nestrilabs/nestri-go-sdk.svg" alt="Go Reference"></a>
 
-The Nestri SDK Go library provides convenient access to [the Nestri SDK REST
-API](https://docs.nestri-sdk.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+The Nestri Go library provides convenient access to [the Nestri REST
+API](https://docs.nestri.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
