@@ -9,7 +9,7 @@ import (
 
 	"github.com/nestrilabs/nestri-go-sdk"
 	"github.com/nestrilabs/nestri-go-sdk/internal/testutil"
-	"github.com/nestrilabs/nestri-go-sdk/nestri"
+	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
 func TestUsage(t *testing.T) {
@@ -21,8 +21,8 @@ func TestUsage(t *testing.T) {
 		return
 	}
 	client := nestri.NewClient(
-		nestri.WithBaseURL(baseURL),
-		nestri.WithBearerToken("My Bearer Token"),
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
 	machine, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
 	if err != nil {
