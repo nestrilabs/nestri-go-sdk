@@ -52,7 +52,7 @@ func main() {
 	client := nestri.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("BEARER_TOKEN")
 	)
-	machine, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
+	machine, err := client.Machines.New(context.TODO(), "fc27f428f9ca47d4b41b70889ae0c62090")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -145,7 +145,7 @@ client := nestri.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Machines.Get(context.TODO(), ...,
+client.Machines.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,14 +174,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Machines.Get(context.TODO(), "REPLACE_ME")
+_, err := client.Machines.New(context.TODO(), "fc27f428f9ca47d4b41b70889ae0c62090")
 if err != nil {
 	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/machine/{id}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/machines/{fingerprint}": 400 Bad Request { ... }
 }
 ```
 
@@ -199,9 +199,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Machines.Get(
+client.Machines.New(
 	ctx,
-	"REPLACE_ME",
+	"fc27f428f9ca47d4b41b70889ae0c62090",
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -235,9 +235,9 @@ client := nestri.NewClient(
 )
 
 // Override per-request:
-client.Machines.Get(
+client.Machines.New(
 	context.TODO(),
-	"REPLACE_ME",
+	"fc27f428f9ca47d4b41b70889ae0c62090",
 	option.WithMaxRetries(5),
 )
 ```
