@@ -25,6 +25,7 @@ import (
 // the [NewSessionService] method instead.
 type SessionService struct {
 	Options []option.RequestOption
+	Active  *SessionActiveService
 }
 
 // NewSessionService generates a new service that applies the given options to each
@@ -33,6 +34,7 @@ type SessionService struct {
 func NewSessionService(opts ...option.RequestOption) (r *SessionService) {
 	r = &SessionService{}
 	r.Options = opts
+	r.Active = NewSessionActiveService(opts...)
 	return
 }
 
