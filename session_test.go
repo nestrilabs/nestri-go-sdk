@@ -13,7 +13,7 @@ import (
 	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
-func TestMachineNew(t *testing.T) {
+func TestSessionNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,16 @@ func TestMachineNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Machines.New(context.TODO(), "fc27f428f9ca47d4b41b70889ae0c62090")
+	_, err := client.Sessions.New(
+		context.TODO(),
+		"id",
+		nestri.SessionNewParams{
+			Fingerprint: nestri.F("fc27f428f9ca47d4b41b70889ae0c62090"),
+			Name:        nestri.F("Late night chilling with the squad"),
+			Public:      nestri.F(true),
+			SteamID:     nestri.F(870780.000000),
+		},
+	)
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -35,7 +44,7 @@ func TestMachineNew(t *testing.T) {
 	}
 }
 
-func TestMachineGet(t *testing.T) {
+func TestSessionGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -47,7 +56,7 @@ func TestMachineGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Machines.Get(context.TODO(), "fc27f428f9ca47d4b41b70889ae0c62090")
+	_, err := client.Sessions.Get(context.TODO(), "0bfcb712-df13-4454-81a8-fbee66eddca4")
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -57,7 +66,7 @@ func TestMachineGet(t *testing.T) {
 	}
 }
 
-func TestMachineList(t *testing.T) {
+func TestSessionList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -69,7 +78,7 @@ func TestMachineList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Machines.List(context.TODO())
+	_, err := client.Sessions.List(context.TODO())
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -79,7 +88,7 @@ func TestMachineList(t *testing.T) {
 	}
 }
 
-func TestMachineDelete(t *testing.T) {
+func TestSessionDelete(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -91,7 +100,7 @@ func TestMachineDelete(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Machines.Delete(context.TODO(), "fc27f428f9ca47d4b41b70889ae0c62090")
+	_, err := client.Sessions.Delete(context.TODO(), "0bfcb712-df13-4454-81a8-fbee66eddca4")
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
