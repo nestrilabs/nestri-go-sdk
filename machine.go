@@ -120,7 +120,7 @@ func (r MachineNewResponseData) IsKnown() bool {
 }
 
 type MachineGetResponse struct {
-	// Represents a a physical or virtual machine connected to the Nestri network..
+	// Represents a physical or virtual machine connected to the Nestri network..
 	Data MachineGetResponseData `json:"data,required"`
 	JSON machineGetResponseJSON `json:"-"`
 }
@@ -141,7 +141,7 @@ func (r machineGetResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-// Represents a a physical or virtual machine connected to the Nestri network..
+// Represents a physical or virtual machine connected to the Nestri network..
 type MachineGetResponseData struct {
 	// Unique object identifier. The format and length of IDs may change over time.
 	ID string `json:"id,required"`
@@ -219,7 +219,7 @@ func (r machineListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-// Represents a a physical or virtual machine connected to the Nestri network..
+// Represents a physical or virtual machine connected to the Nestri network..
 type MachineListResponseData struct {
 	// Unique object identifier. The format and length of IDs may change over time.
 	ID string `json:"id,required"`
