@@ -16,6 +16,9 @@ func (UnionString) ImplementsSessionActivePublicListResponseDataStartedAtUnion()
 func (UnionString) ImplementsSessionActivePublicListResponseDataEndedAtUnion()   {}
 func (UnionString) ImplementsGameSessionListResponseDataStartedAtUnion()         {}
 func (UnionString) ImplementsGameSessionListResponseDataEndedAtUnion()           {}
+func (UnionString) ImplementsUserGetResponseDataCreatedAtUnion()                 {}
+func (UnionString) ImplementsUserGetResponseDataDiscriminatorUnion()             {}
+func (UnionString) ImplementsUserGetResponseDataUpdatedAtUnion()                 {}
 
 type UnionFloat float64
 
@@ -31,3 +34,6 @@ func (UnionFloat) ImplementsSessionActivePublicListResponseDataStartedAtUnion() 
 func (UnionFloat) ImplementsSessionActivePublicListResponseDataEndedAtUnion()   {}
 func (UnionFloat) ImplementsGameSessionListResponseDataStartedAtUnion()         {}
 func (UnionFloat) ImplementsGameSessionListResponseDataEndedAtUnion()           {}
+func (UnionFloat) ImplementsUserGetResponseDataCreatedAtUnion()                 {}
+func (UnionFloat) ImplementsUserGetResponseDataDiscriminatorUnion()             {}
+func (UnionFloat) ImplementsUserGetResponseDataUpdatedAtUnion()                 {}

@@ -19,6 +19,7 @@ type Client struct {
 	Machines *MachineService
 	Sessions *SessionService
 	Games    *GameService
+	Users    *UserService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -37,6 +38,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Machines = NewMachineService(opts...)
 	r.Sessions = NewSessionService(opts...)
 	r.Games = NewGameService(opts...)
+	r.Users = NewUserService(opts...)
 
 	return
 }
