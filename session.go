@@ -38,15 +38,11 @@ func NewSessionService(opts ...option.RequestOption) (r *SessionService) {
 	return
 }
 
-// Creates a new gaming session for the currently authenticated user, enabling them
+// Create a new gaming session for the currently authenticated user, enabling them
 // to play a game
-func (r *SessionService) New(ctx context.Context, id string, body SessionNewParams, opts ...option.RequestOption) (res *SessionNewResponse, err error) {
+func (r *SessionService) New(ctx context.Context, body SessionNewParams, opts ...option.RequestOption) (res *SessionNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	if id == "" {
-		err = errors.New("missing required id parameter")
-		return
-	}
-	path := fmt.Sprintf("sessions/%s", id)
+	path := "sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
