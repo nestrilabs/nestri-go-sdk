@@ -4,8 +4,6 @@ package nestri
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"net/http"
 	"reflect"
 
@@ -49,18 +47,6 @@ func (r *SubscriptionService) List(ctx context.Context, opts ...option.RequestOp
 	opts = append(r.Options[:], opts...)
 	path := "subscriptions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
-}
-
-// Cancel a subscription for the current user.
-func (r *SubscriptionService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *SubscriptionDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	if id == "" {
-		err = errors.New("missing required id parameter")
-		return
-	}
-	path := fmt.Sprintf("subscriptions/%s", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
 	return
 }
 
@@ -220,41 +206,6 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionFloat(0)),
 		},
 	)
-}
-
-type SubscriptionDeleteResponse struct {
-	Data SubscriptionDeleteResponseData `json:"data,required"`
-	JSON subscriptionDeleteResponseJSON `json:"-"`
-}
-
-// subscriptionDeleteResponseJSON contains the JSON metadata for the struct
-// [SubscriptionDeleteResponse]
-type subscriptionDeleteResponseJSON struct {
-	Data        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SubscriptionDeleteResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r subscriptionDeleteResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type SubscriptionDeleteResponseData string
-
-const (
-	SubscriptionDeleteResponseDataOk SubscriptionDeleteResponseData = "ok"
-)
-
-func (r SubscriptionDeleteResponseData) IsKnown() bool {
-	switch r {
-	case SubscriptionDeleteResponseDataOk:
-		return true
-	}
-	return false
 }
 
 type SubscriptionNewParams struct {
