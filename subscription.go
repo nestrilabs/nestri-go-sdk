@@ -125,14 +125,8 @@ func (r subscriptionListResponseJSON) RawJSON() string {
 type SubscriptionListResponseData struct {
 	// Unique object identifier. The format and length of IDs may change over time.
 	ID string `json:"id,required"`
-	// Frequency of the subscription.
-	Frequency SubscriptionListResponseDataFrequency `json:"frequency,required"`
-	// Next billing date for the subscription.
-	Next SubscriptionListResponseDataNextUnion `json:"next,required"`
-	// ID of the product being subscribed to.
-	ProductID string `json:"productID,required"`
-	// Quantity of the subscription.
-	Quantity int64 `json:"quantity,required"`
+	// The polar.sh checkout id
+	CheckoutID string `json:"checkoutID,required"`
 	// Cancelled date for the subscription.
 	CanceledAt SubscriptionListResponseDataCanceledAtUnion `json:"canceledAt"`
 	JSON       subscriptionListResponseDataJSON            `json:"-"`
@@ -142,10 +136,7 @@ type SubscriptionListResponseData struct {
 // [SubscriptionListResponseData]
 type subscriptionListResponseDataJSON struct {
 	ID          apijson.Field
-	Frequency   apijson.Field
-	Next        apijson.Field
-	ProductID   apijson.Field
-	Quantity    apijson.Field
+	CheckoutID  apijson.Field
 	CanceledAt  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -157,47 +148,6 @@ func (r *SubscriptionListResponseData) UnmarshalJSON(data []byte) (err error) {
 
 func (r subscriptionListResponseDataJSON) RawJSON() string {
 	return r.raw
-}
-
-// Frequency of the subscription.
-type SubscriptionListResponseDataFrequency string
-
-const (
-	SubscriptionListResponseDataFrequencyFixed   SubscriptionListResponseDataFrequency = "fixed"
-	SubscriptionListResponseDataFrequencyDaily   SubscriptionListResponseDataFrequency = "daily"
-	SubscriptionListResponseDataFrequencyWeekly  SubscriptionListResponseDataFrequency = "weekly"
-	SubscriptionListResponseDataFrequencyMonthly SubscriptionListResponseDataFrequency = "monthly"
-	SubscriptionListResponseDataFrequencyYearly  SubscriptionListResponseDataFrequency = "yearly"
-)
-
-func (r SubscriptionListResponseDataFrequency) IsKnown() bool {
-	switch r {
-	case SubscriptionListResponseDataFrequencyFixed, SubscriptionListResponseDataFrequencyDaily, SubscriptionListResponseDataFrequencyWeekly, SubscriptionListResponseDataFrequencyMonthly, SubscriptionListResponseDataFrequencyYearly:
-		return true
-	}
-	return false
-}
-
-// Next billing date for the subscription.
-//
-// Union satisfied by [shared.UnionString] or [shared.UnionFloat].
-type SubscriptionListResponseDataNextUnion interface {
-	ImplementsSubscriptionListResponseDataNextUnion()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*SubscriptionListResponseDataNextUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.String,
-			Type:       reflect.TypeOf(shared.UnionString("")),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.Number,
-			Type:       reflect.TypeOf(shared.UnionFloat(0)),
-		},
-	)
 }
 
 // Cancelled date for the subscription.
@@ -258,53 +208,10 @@ func (r SubscriptionDeleteResponseData) IsKnown() bool {
 }
 
 type SubscriptionNewParams struct {
-	// Unique object identifier. The format and length of IDs may change over time.
-	ID param.Field[string] `json:"id,required"`
-	// Frequency of the subscription.
-	Frequency param.Field[SubscriptionNewParamsFrequency] `json:"frequency,required"`
-	// Next billing date for the subscription.
-	Next param.Field[SubscriptionNewParamsNextUnion] `json:"next,required"`
-	// ID of the product being subscribed to.
-	ProductID param.Field[string] `json:"productID,required"`
-	// Quantity of the subscription.
-	Quantity param.Field[int64] `json:"quantity,required"`
-	// Cancelled date for the subscription.
-	CanceledAt param.Field[SubscriptionNewParamsCanceledAtUnion] `json:"canceledAt"`
+	// The checkout id information.
+	CheckoutID param.Field[string] `json:"checkoutID,required"`
 }
 
 func (r SubscriptionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// Frequency of the subscription.
-type SubscriptionNewParamsFrequency string
-
-const (
-	SubscriptionNewParamsFrequencyFixed   SubscriptionNewParamsFrequency = "fixed"
-	SubscriptionNewParamsFrequencyDaily   SubscriptionNewParamsFrequency = "daily"
-	SubscriptionNewParamsFrequencyWeekly  SubscriptionNewParamsFrequency = "weekly"
-	SubscriptionNewParamsFrequencyMonthly SubscriptionNewParamsFrequency = "monthly"
-	SubscriptionNewParamsFrequencyYearly  SubscriptionNewParamsFrequency = "yearly"
-)
-
-func (r SubscriptionNewParamsFrequency) IsKnown() bool {
-	switch r {
-	case SubscriptionNewParamsFrequencyFixed, SubscriptionNewParamsFrequencyDaily, SubscriptionNewParamsFrequencyWeekly, SubscriptionNewParamsFrequencyMonthly, SubscriptionNewParamsFrequencyYearly:
-		return true
-	}
-	return false
-}
-
-// Next billing date for the subscription.
-//
-// Satisfied by [shared.UnionString], [shared.UnionFloat].
-type SubscriptionNewParamsNextUnion interface {
-	ImplementsSubscriptionNewParamsNextUnion()
-}
-
-// Cancelled date for the subscription.
-//
-// Satisfied by [shared.UnionString], [shared.UnionFloat].
-type SubscriptionNewParamsCanceledAtUnion interface {
-	ImplementsSubscriptionNewParamsCanceledAtUnion()
 }
