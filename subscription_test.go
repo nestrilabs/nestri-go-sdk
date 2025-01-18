@@ -11,10 +11,9 @@ import (
 	"github.com/nestrilabs/nestri-go-sdk"
 	"github.com/nestrilabs/nestri-go-sdk/internal/testutil"
 	"github.com/nestrilabs/nestri-go-sdk/option"
-	"github.com/nestrilabs/nestri-go-sdk/shared"
 )
 
-func TestSubscriptionNewWithOptionalParams(t *testing.T) {
+func TestSubscriptionNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -27,12 +26,7 @@ func TestSubscriptionNewWithOptionalParams(t *testing.T) {
 		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Subscriptions.New(context.TODO(), nestri.SubscriptionNewParams{
-		ID:         nestri.F("0bfcb712-df13-4454-81a8-fbee66eddca4"),
-		Frequency:  nestri.F(nestri.SubscriptionNewParamsFrequencyFixed),
-		Next:       nestri.F[nestri.SubscriptionNewParamsNextUnion](shared.UnionString("2025-01-09T01:56:23.902Z")),
-		ProductID:  nestri.F("0bfcb712-df43-4454-81a8-fbee66eddca4"),
-		Quantity:   nestri.F(int64(1)),
-		CanceledAt: nestri.F[nestri.SubscriptionNewParamsCanceledAtUnion](shared.UnionString("2025-02-09T01:56:23.902Z")),
+		CheckoutID: nestri.F("0bfcb712-df13-4454-81a8-fbee66eddca4"),
 	})
 	if err != nil {
 		var apierr *nestri.Error
