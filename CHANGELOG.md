@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-01-18)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Features
+
+* **api:** add subscriptions ([#31](https://github.com/nestrilabs/nestri-go-sdk/issues/31)) ([94a2e97](https://github.com/nestrilabs/nestri-go-sdk/commit/94a2e97167b3a40b4b5bc82ce32034baf2d0ab71))
+* **api:** Add team endpoints ([#29](https://github.com/nestrilabs/nestri-go-sdk/issues/29)) ([179d950](https://github.com/nestrilabs/nestri-go-sdk/commit/179d950b28b34b94dc75e1c11ed323ceac27845f))
+* **api:** change subscriptions ([#37](https://github.com/nestrilabs/nestri-go-sdk/issues/37)) ([21bc16c](https://github.com/nestrilabs/nestri-go-sdk/commit/21bc16c948e39235386d217442e5c9f2b0d9f682))
+* **api:** manual updates ([#34](https://github.com/nestrilabs/nestri-go-sdk/issues/34)) ([e4b72ee](https://github.com/nestrilabs/nestri-go-sdk/commit/e4b72eea78f9e8d77d66f6c980180039b915070f))
+* **api:** re-add subscriptions ([#35](https://github.com/nestrilabs/nestri-go-sdk/issues/35)) ([bcbfdaa](https://github.com/nestrilabs/nestri-go-sdk/commit/bcbfdaa4c8eee136f45542977ece36a02111d757))
+* **api:** re-add subscriptions ([#36](https://github.com/nestrilabs/nestri-go-sdk/issues/36)) ([13fba78](https://github.com/nestrilabs/nestri-go-sdk/commit/13fba78ea105e5fda14cc9d83985c85ecefb5291))
+* **api:** update subscriptions ([#32](https://github.com/nestrilabs/nestri-go-sdk/issues/32)) ([9a435ff](https://github.com/nestrilabs/nestri-go-sdk/commit/9a435ffc40848ccc03a7337b3d25ff831d9ff4df))
+* **api:** update subscriptions ([#33](https://github.com/nestrilabs/nestri-go-sdk/issues/33)) ([6792df2](https://github.com/nestrilabs/nestri-go-sdk/commit/6792df24abb44df412fb7a06db22e90ce2fbdf8b))
+
 ## 0.1.0-alpha.8 (2025-01-14)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
