@@ -15,12 +15,13 @@ import (
 // interacting with the nestri API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options  []option.RequestOption
-	Machines *MachineService
-	Sessions *SessionService
-	Games    *GameService
-	Users    *UserService
-	Teams    *TeamService
+	Options       []option.RequestOption
+	Machines      *MachineService
+	Sessions      *SessionService
+	Games         *GameService
+	Users         *UserService
+	Teams         *TeamService
+	Subscriptions *SubscriptionService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -41,6 +42,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Games = NewGameService(opts...)
 	r.Users = NewUserService(opts...)
 	r.Teams = NewTeamService(opts...)
+	r.Subscriptions = NewSubscriptionService(opts...)
 
 	return
 }
