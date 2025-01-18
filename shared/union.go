@@ -23,10 +23,6 @@ func (UnionString) ImplementsTeamGetResponseDataCreatedAtUnion()                
 func (UnionString) ImplementsTeamGetResponseDataUpdatedAtUnion()                 {}
 func (UnionString) ImplementsTeamListResponseDataCreatedAtUnion()                {}
 func (UnionString) ImplementsTeamListResponseDataUpdatedAtUnion()                {}
-func (UnionString) ImplementsSubscriptionListResponseDataNextUnion()             {}
-func (UnionString) ImplementsSubscriptionListResponseDataCanceledAtUnion()       {}
-func (UnionString) ImplementsSubscriptionNewParamsNextUnion()                    {}
-func (UnionString) ImplementsSubscriptionNewParamsCanceledAtUnion()              {}
 
 type UnionFloat float64
 
@@ -49,7 +45,3 @@ func (UnionFloat) ImplementsTeamGetResponseDataCreatedAtUnion()                 
 func (UnionFloat) ImplementsTeamGetResponseDataUpdatedAtUnion()                 {}
 func (UnionFloat) ImplementsTeamListResponseDataCreatedAtUnion()                {}
 func (UnionFloat) ImplementsTeamListResponseDataUpdatedAtUnion()                {}
-func (UnionFloat) ImplementsSubscriptionListResponseDataNextUnion()             {}
-func (UnionFloat) ImplementsSubscriptionListResponseDataCanceledAtUnion()       {}
-func (UnionFloat) ImplementsSubscriptionNewParamsNextUnion()                    {}
-func (UnionFloat) ImplementsSubscriptionNewParamsCanceledAtUnion()              {}
