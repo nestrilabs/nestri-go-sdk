@@ -24,9 +24,9 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	game, err := client.Games.Get(context.TODO(), 870780.000000)
+	user, err := client.Users.Get(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", game.Data)
+	t.Logf("%+v\n", user.Data)
 }
