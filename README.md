@@ -52,11 +52,11 @@ func main() {
 	client := nestri.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NESTRI_API_KEY")
 	)
-	game, err := client.Games.Get(context.TODO(), 870780.000000)
+	user, err := client.Users.Get(context.TODO())
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", game.Data)
+	fmt.Printf("%+v\n", user.Data)
 }
 
 ```
@@ -145,7 +145,7 @@ client := nestri.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Games.Get(context.TODO(), ...,
+client.Users.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,14 +174,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Games.Get(context.TODO(), 870780.000000)
+_, err := client.Users.Get(context.TODO())
 if err != nil {
 	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/games/{steamID}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/users/@me": 400 Bad Request { ... }
 }
 ```
 
@@ -199,9 +199,8 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Games.Get(
+client.Users.Get(
 	ctx,
-	870780.000000,
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -235,11 +234,7 @@ client := nestri.NewClient(
 )
 
 // Override per-request:
-client.Games.Get(
-	context.TODO(),
-	870780.000000,
-	option.WithMaxRetries(5),
-)
+client.Users.Get(context.TODO(), option.WithMaxRetries(5))
 ```
 
 ### Making custom/undocumented requests
