@@ -13,7 +13,7 @@ import (
 	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
-func TestTeamNew(t *testing.T) {
+func TestTaskNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,10 +25,7 @@ func TestTeamNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Teams.New(context.TODO(), nestri.TeamNewParams{
-		Name: nestri.F("Jane Doe's Games"),
-		Slug: nestri.F("jane-does-games"),
-	})
+	_, err := client.Tasks.New(context.TODO())
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -38,7 +35,7 @@ func TestTeamNew(t *testing.T) {
 	}
 }
 
-func TestTeamGet(t *testing.T) {
+func TestTaskGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -50,7 +47,7 @@ func TestTeamGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Teams.Get(context.TODO(), "jane-does-games")
+	_, err := client.Tasks.Get(context.TODO(), "0bfcc712-df13-4454-81a8-fbee66eddca4")
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -60,7 +57,7 @@ func TestTeamGet(t *testing.T) {
 	}
 }
 
-func TestTeamList(t *testing.T) {
+func TestTaskUpdate(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -72,7 +69,7 @@ func TestTeamList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Teams.List(context.TODO())
+	_, err := client.Tasks.Update(context.TODO(), "0bfcc712-df13-4454-81a8-fbee66eddca4")
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -82,7 +79,7 @@ func TestTeamList(t *testing.T) {
 	}
 }
 
-func TestTeamDelete(t *testing.T) {
+func TestTaskList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -94,7 +91,7 @@ func TestTeamDelete(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Teams.Delete(context.TODO(), "jane-does-games")
+	_, err := client.Tasks.List(context.TODO())
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
@@ -104,7 +101,7 @@ func TestTeamDelete(t *testing.T) {
 	}
 }
 
-func TestTeamInvite(t *testing.T) {
+func TestTaskDelete(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -116,11 +113,29 @@ func TestTeamInvite(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Teams.Invite(
-		context.TODO(),
-		"jane-does-games",
-		"john@example.com",
+	_, err := client.Tasks.Delete(context.TODO(), "0bfcc712-df13-4454-81a8-fbee66eddca4")
+	if err != nil {
+		var apierr *nestri.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestTaskSession(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := nestri.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithBearerToken("My Bearer Token"),
 	)
+	_, err := client.Tasks.Session(context.TODO(), "0bfcc712-df13-4454-81a8-fbee66eddca4")
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {

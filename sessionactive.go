@@ -22,7 +22,6 @@ import (
 // the [NewSessionActiveService] method instead.
 type SessionActiveService struct {
 	Options []option.RequestOption
-	Public  *SessionActivePublicService
 }
 
 // NewSessionActiveService generates a new service that applies the given options
@@ -31,7 +30,6 @@ type SessionActiveService struct {
 func NewSessionActiveService(opts ...option.RequestOption) (r *SessionActiveService) {
 	r = &SessionActiveService{}
 	r.Options = opts
-	r.Public = NewSessionActivePublicService(opts...)
 	return
 }
 
@@ -71,8 +69,6 @@ func (r sessionActiveListResponseJSON) RawJSON() string {
 type SessionActiveListResponseData struct {
 	// Unique object identifier. The format and length of IDs may change over time.
 	ID string `json:"id,required"`
-	// A human-readable name for the session to help identify it
-	Name string `json:"name,required"`
 	// If true, the session is publicly viewable by all users. If false, only
 	// authorized users can access it
 	Public bool `json:"public,required"`
@@ -88,7 +84,6 @@ type SessionActiveListResponseData struct {
 // [SessionActiveListResponseData]
 type sessionActiveListResponseDataJSON struct {
 	ID          apijson.Field
-	Name        apijson.Field
 	Public      apijson.Field
 	StartedAt   apijson.Field
 	EndedAt     apijson.Field

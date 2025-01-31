@@ -59,14 +59,6 @@ func (r *SessionService) Get(ctx context.Context, id string, opts ...option.Requ
 	return
 }
 
-// Returns a list of all gaming sessions associated with the authenticated user
-func (r *SessionService) List(ctx context.Context, opts ...option.RequestOption) (res *SessionListResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "sessions"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
-}
-
 // This endpoint allows a user to terminate an active gaming session by providing
 // the session's unique ID
 func (r *SessionService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *SessionDeleteResponse, err error) {
@@ -143,8 +135,6 @@ func (r sessionGetResponseJSON) RawJSON() string {
 type SessionGetResponseData struct {
 	// Unique object identifier. The format and length of IDs may change over time.
 	ID string `json:"id,required"`
-	// A human-readable name for the session to help identify it
-	Name string `json:"name,required"`
 	// If true, the session is publicly viewable by all users. If false, only
 	// authorized users can access it
 	Public bool `json:"public,required"`
@@ -160,7 +150,6 @@ type SessionGetResponseData struct {
 // [SessionGetResponseData]
 type sessionGetResponseDataJSON struct {
 	ID          apijson.Field
-	Name        apijson.Field
 	Public      apijson.Field
 	StartedAt   apijson.Field
 	EndedAt     apijson.Field
@@ -221,111 +210,6 @@ func init() {
 	)
 }
 
-type SessionListResponse struct {
-	// A list of gaming sessions associated with the user
-	Data []SessionListResponseData `json:"data,required"`
-	JSON sessionListResponseJSON   `json:"-"`
-}
-
-// sessionListResponseJSON contains the JSON metadata for the struct
-// [SessionListResponse]
-type sessionListResponseJSON struct {
-	Data        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SessionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r sessionListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-// Represents a single game play session, tracking its lifetime and accessibility
-// settings.
-type SessionListResponseData struct {
-	// Unique object identifier. The format and length of IDs may change over time.
-	ID string `json:"id,required"`
-	// A human-readable name for the session to help identify it
-	Name string `json:"name,required"`
-	// If true, the session is publicly viewable by all users. If false, only
-	// authorized users can access it
-	Public bool `json:"public,required"`
-	// The timestamp indicating when this session started.
-	StartedAt SessionListResponseDataStartedAtUnion `json:"startedAt,required"`
-	// The timestamp indicating when this session was completed or terminated. Null if
-	// session is still active.
-	EndedAt SessionListResponseDataEndedAtUnion `json:"endedAt"`
-	JSON    sessionListResponseDataJSON         `json:"-"`
-}
-
-// sessionListResponseDataJSON contains the JSON metadata for the struct
-// [SessionListResponseData]
-type sessionListResponseDataJSON struct {
-	ID          apijson.Field
-	Name        apijson.Field
-	Public      apijson.Field
-	StartedAt   apijson.Field
-	EndedAt     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SessionListResponseData) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r sessionListResponseDataJSON) RawJSON() string {
-	return r.raw
-}
-
-// The timestamp indicating when this session started.
-//
-// Union satisfied by [shared.UnionString] or [shared.UnionFloat].
-type SessionListResponseDataStartedAtUnion interface {
-	ImplementsSessionListResponseDataStartedAtUnion()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*SessionListResponseDataStartedAtUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.String,
-			Type:       reflect.TypeOf(shared.UnionString("")),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.Number,
-			Type:       reflect.TypeOf(shared.UnionFloat(0)),
-		},
-	)
-}
-
-// The timestamp indicating when this session was completed or terminated. Null if
-// session is still active.
-//
-// Union satisfied by [shared.UnionString] or [shared.UnionFloat].
-type SessionListResponseDataEndedAtUnion interface {
-	ImplementsSessionListResponseDataEndedAtUnion()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*SessionListResponseDataEndedAtUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.String,
-			Type:       reflect.TypeOf(shared.UnionString("")),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.Number,
-			Type:       reflect.TypeOf(shared.UnionFloat(0)),
-		},
-	)
-}
-
 type SessionDeleteResponse struct {
 	Data SessionDeleteResponseData `json:"data,required"`
 	JSON sessionDeleteResponseJSON `json:"-"`
@@ -362,16 +246,9 @@ func (r SessionDeleteResponseData) IsKnown() bool {
 }
 
 type SessionNewParams struct {
-	// The unique fingerprint of the machine to play on, derived from its Linux machine
-	// ID
-	Fingerprint param.Field[string] `json:"fingerprint,required"`
-	// The human readable name to give this session
-	Name param.Field[string] `json:"name,required"`
 	// Whether the session is publicly viewable by all users. If false, only authorized
 	// users can access it
 	Public param.Field[bool] `json:"public,required"`
-	// The Steam ID of the game the user wants to play
-	SteamID param.Field[float64] `json:"steamID,required"`
 }
 
 func (r SessionNewParams) MarshalJSON() (data []byte, err error) {

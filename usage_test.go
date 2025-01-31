@@ -24,9 +24,11 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	game, err := client.Games.Get(context.TODO(), 870780.000000)
+	session, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", game.Data)
+	t.Logf("%+v\n", session.Data)
 }

@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-01-31)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* **api:** Add tasks and remove old resources ([#45](https://github.com/nestrilabs/nestri-go-sdk/issues/45)) ([1157677](https://github.com/nestrilabs/nestri-go-sdk/commit/11576779c7baa7fbbec44b14aae8c272a1017223))
+* **api:** api update ([#43](https://github.com/nestrilabs/nestri-go-sdk/issues/43)) ([acd6d36](https://github.com/nestrilabs/nestri-go-sdk/commit/acd6d36d4371d6d70b1c6b7cfbd182c02859d372))
+* **api:** api update ([#44](https://github.com/nestrilabs/nestri-go-sdk/issues/44)) ([1544ca5](https://github.com/nestrilabs/nestri-go-sdk/commit/1544ca5810fe1bffc874303db2db2565d56ab83d))
+
+
+### Bug Fixes
+
+* fix apijson.Port for embedded structs ([#39](https://github.com/nestrilabs/nestri-go-sdk/issues/39)) ([25c4968](https://github.com/nestrilabs/nestri-go-sdk/commit/25c4968dc35438d2de5bc4c2cbae751b3e246633))
+* fix apijson.Port for embedded structs ([#41](https://github.com/nestrilabs/nestri-go-sdk/issues/41)) ([816a9ff](https://github.com/nestrilabs/nestri-go-sdk/commit/816a9ff0d357a0f7dabab4832534817896b05a0b))
+
+
+### Chores
+
+* refactor client tests ([#42](https://github.com/nestrilabs/nestri-go-sdk/issues/42)) ([8bc7a26](https://github.com/nestrilabs/nestri-go-sdk/commit/8bc7a26009ed1f77714c91bcd0476e4ccefe857b))
+
 ## 0.1.0-alpha.9 (2025-01-18)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
