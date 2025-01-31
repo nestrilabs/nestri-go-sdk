@@ -16,12 +16,11 @@ import (
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options       []option.RequestOption
-	Machines      *MachineService
 	Sessions      *SessionService
-	Games         *GameService
 	Users         *UserService
 	Teams         *TeamService
 	Subscriptions *SubscriptionService
+	Tasks         *TaskService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -37,12 +36,11 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r = &Client{Options: opts}
 
-	r.Machines = NewMachineService(opts...)
 	r.Sessions = NewSessionService(opts...)
-	r.Games = NewGameService(opts...)
 	r.Users = NewUserService(opts...)
 	r.Teams = NewTeamService(opts...)
 	r.Subscriptions = NewSubscriptionService(opts...)
+	r.Tasks = NewTaskService(opts...)
 
 	return
 }
