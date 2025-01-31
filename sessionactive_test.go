@@ -4,6 +4,7 @@ package nestri_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
@@ -12,7 +13,7 @@ import (
 	"github.com/nestrilabs/nestri-go-sdk/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestSessionActiveList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,11 +25,12 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	session, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
-		Public: nestri.F(true),
-	})
+	_, err := client.Sessions.Active.List(context.TODO())
 	if err != nil {
-		t.Error(err)
+		var apierr *nestri.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", session.Data)
 }
