@@ -70,6 +70,8 @@ type UserGetResponseData struct {
 	CreatedAt UserGetResponseDataCreatedAtUnion `json:"createdAt,required"`
 	// The number discriminator for each username
 	Discriminator UserGetResponseDataDiscriminatorUnion `json:"discriminator,required"`
+	// Whether the user is active, idle or offline
+	Status UserGetResponseDataStatus `json:"status,required"`
 	// The time when this profile was last edited
 	UpdatedAt UserGetResponseDataUpdatedAtUnion `json:"updatedAt,required"`
 	// The user's unique username
@@ -85,6 +87,7 @@ type userGetResponseDataJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	Discriminator apijson.Field
+	Status        apijson.Field
 	UpdatedAt     apijson.Field
 	Username      apijson.Field
 	AvatarURL     apijson.Field
@@ -142,6 +145,23 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionFloat(0)),
 		},
 	)
+}
+
+// Whether the user is active, idle or offline
+type UserGetResponseDataStatus string
+
+const (
+	UserGetResponseDataStatusActive  UserGetResponseDataStatus = "active"
+	UserGetResponseDataStatusIdle    UserGetResponseDataStatus = "idle"
+	UserGetResponseDataStatusOffline UserGetResponseDataStatus = "offline"
+)
+
+func (r UserGetResponseDataStatus) IsKnown() bool {
+	switch r {
+	case UserGetResponseDataStatusActive, UserGetResponseDataStatusIdle, UserGetResponseDataStatusOffline:
+		return true
+	}
+	return false
 }
 
 // The time when this profile was last edited
