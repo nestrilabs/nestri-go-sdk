@@ -25,7 +25,7 @@ func TestUserGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Users.Get(context.TODO(), "0bfcb712-df13-4454-81a8-fbee66eddca4")
+	_, err := client.Users.Get(context.TODO())
 	if err != nil {
 		var apierr *nestri.Error
 		if errors.As(err, &apierr) {
