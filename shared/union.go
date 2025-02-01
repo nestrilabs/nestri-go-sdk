@@ -11,6 +11,11 @@ func (UnionString) ImplementsSessionActiveListResponseDataEndedAtUnion()   {}
 func (UnionString) ImplementsUserGetResponseDataCreatedAtUnion()           {}
 func (UnionString) ImplementsUserGetResponseDataDiscriminatorUnion()       {}
 func (UnionString) ImplementsUserGetResponseDataUpdatedAtUnion()           {}
+func (UnionString) ImplementsUserListResponseDataCreatedAtUnion()          {}
+func (UnionString) ImplementsUserListResponseDataDiscriminatorUnion()      {}
+func (UnionString) ImplementsUserListResponseDataUpdatedAtUnion()          {}
+func (UnionString) ImplementsUserSessionResponseDataStartedAtUnion()       {}
+func (UnionString) ImplementsUserSessionResponseDataEndedAtUnion()         {}
 func (UnionString) ImplementsSubscriptionListResponseDataCanceledAtUnion() {}
 func (UnionString) ImplementsTaskGetResponseDataCanceledAtUnion()          {}
 func (UnionString) ImplementsTaskUpdateResponseDataCanceledAtUnion()       {}
@@ -27,6 +32,11 @@ func (UnionFloat) ImplementsSessionActiveListResponseDataEndedAtUnion()   {}
 func (UnionFloat) ImplementsUserGetResponseDataCreatedAtUnion()           {}
 func (UnionFloat) ImplementsUserGetResponseDataDiscriminatorUnion()       {}
 func (UnionFloat) ImplementsUserGetResponseDataUpdatedAtUnion()           {}
+func (UnionFloat) ImplementsUserListResponseDataCreatedAtUnion()          {}
+func (UnionFloat) ImplementsUserListResponseDataDiscriminatorUnion()      {}
+func (UnionFloat) ImplementsUserListResponseDataUpdatedAtUnion()          {}
+func (UnionFloat) ImplementsUserSessionResponseDataStartedAtUnion()       {}
+func (UnionFloat) ImplementsUserSessionResponseDataEndedAtUnion()         {}
 func (UnionFloat) ImplementsSubscriptionListResponseDataCanceledAtUnion() {}
 func (UnionFloat) ImplementsTaskGetResponseDataCanceledAtUnion()          {}
 func (UnionFloat) ImplementsTaskUpdateResponseDataCanceledAtUnion()       {}
