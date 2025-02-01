@@ -24,9 +24,11 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	user, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	session, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", user.Data)
+	t.Logf("%+v\n", session.Data)
 }

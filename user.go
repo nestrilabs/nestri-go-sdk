@@ -35,14 +35,10 @@ func NewUserService(opts ...option.RequestOption) (r *UserService) {
 	return
 }
 
-// Gets a user's profile by their id
-func (r *UserService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *UserGetResponse, err error) {
+// Returns the current authenticate user's profile
+func (r *UserService) Get(ctx context.Context, opts ...option.RequestOption) (res *UserGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	if id == "" {
-		err = errors.New("missing required id parameter")
-		return
-	}
-	path := fmt.Sprintf("users/%s", id)
+	path := "users/@me"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -55,7 +51,7 @@ func (r *UserService) List(ctx context.Context, opts ...option.RequestOption) (r
 	return
 }
 
-// Get a user's gaming session details by their id
+// Get a user's active gaming session details by their id
 func (r *UserService) Session(ctx context.Context, id string, opts ...option.RequestOption) (res *UserSessionResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {

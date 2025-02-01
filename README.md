@@ -52,11 +52,13 @@ func main() {
 	client := nestri.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NESTRI_API_KEY")
 	)
-	user, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	session, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", user.Data)
+	fmt.Printf("%+v\n", session.Data)
 }
 
 ```
@@ -145,7 +147,7 @@ client := nestri.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Users.Get(context.TODO(), ...,
+client.Sessions.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,14 +176,16 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+_, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
+	Public: nestri.F(true),
+})
 if err != nil {
 	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/users/{id}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/sessions": 400 Bad Request { ... }
 }
 ```
 
@@ -199,9 +203,11 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Users.Get(
+client.Sessions.New(
 	ctx,
-	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
+	nestri.SessionNewParams{
+		Public: nestri.F(true),
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -235,9 +241,11 @@ client := nestri.NewClient(
 )
 
 // Override per-request:
-client.Users.Get(
+client.Sessions.New(
 	context.TODO(),
-	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
+	nestri.SessionNewParams{
+		Public: nestri.F(true),
+	},
 	option.WithMaxRetries(5),
 )
 ```
