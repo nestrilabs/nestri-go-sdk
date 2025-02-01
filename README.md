@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/nestrilabs/nestri-go-sdk@v0.1.0-alpha.10'
+go get -u 'github.com/nestrilabs/nestri-go-sdk@v0.1.0-alpha.11'
 ```
 
 <!-- x-release-please-end -->
@@ -52,13 +52,11 @@ func main() {
 	client := nestri.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NESTRI_API_KEY")
 	)
-	session, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
-		Public: nestri.F(true),
-	})
+	user, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", session.Data)
+	fmt.Printf("%+v\n", user.Data)
 }
 
 ```
@@ -147,7 +145,7 @@ client := nestri.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Sessions.New(context.TODO(), ...,
+client.Users.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -176,16 +174,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Sessions.New(context.TODO(), nestri.SessionNewParams{
-	Public: nestri.F(true),
-})
+_, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 if err != nil {
 	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/sessions": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/users/{id}": 400 Bad Request { ... }
 }
 ```
 
@@ -203,11 +199,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Sessions.New(
+client.Users.Get(
 	ctx,
-	nestri.SessionNewParams{
-		Public: nestri.F(true),
-	},
+	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -241,11 +235,9 @@ client := nestri.NewClient(
 )
 
 // Override per-request:
-client.Sessions.New(
+client.Users.Get(
 	context.TODO(),
-	nestri.SessionNewParams{
-		Public: nestri.F(true),
-	},
+	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
 	option.WithMaxRetries(5),
 )
 ```

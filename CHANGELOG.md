@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2025-02-01)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### Features
+
+* **api:** Add user sessions endpoints ([#49](https://github.com/nestrilabs/nestri-go-sdk/issues/49)) ([416211c](https://github.com/nestrilabs/nestri-go-sdk/commit/416211c0aa33984c1e2cdf982e4a55612fcfc371))
+* **api:** api update ([#47](https://github.com/nestrilabs/nestri-go-sdk/issues/47)) ([a85a089](https://github.com/nestrilabs/nestri-go-sdk/commit/a85a089b1ca4fee421eeb5276f78c7396ff9d560))
+
 ## 0.1.0-alpha.10 (2025-01-31)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
