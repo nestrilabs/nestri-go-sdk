@@ -18,7 +18,6 @@ type Client struct {
 	Options       []option.RequestOption
 	Sessions      *SessionService
 	Users         *UserService
-	Teams         *TeamService
 	Subscriptions *SubscriptionService
 	Tasks         *TaskService
 }
@@ -38,7 +37,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r.Sessions = NewSessionService(opts...)
 	r.Users = NewUserService(opts...)
-	r.Teams = NewTeamService(opts...)
 	r.Subscriptions = NewSubscriptionService(opts...)
 	r.Tasks = NewTaskService(opts...)
 
