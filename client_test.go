@@ -37,7 +37,9 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	client.Sessions.New(context.Background(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if userAgent != fmt.Sprintf("Nestri/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -60,7 +62,9 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(context.Background(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -94,7 +98,9 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(context.Background(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -123,7 +129,9 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(context.Background(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -151,7 +159,9 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(context.Background(), nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -173,7 +183,9 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Users.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(cancelCtx, nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -192,7 +204,9 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Users.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Sessions.New(cancelCtx, nestri.SessionNewParams{
+		Public: nestri.F(true),
+	})
 	if err == nil {
 		t.Error("expected there to be a cancel error")
 	}
@@ -217,7 +231,9 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Users.Get(deadlineCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+		_, err := client.Sessions.New(deadlineCtx, nestri.SessionNewParams{
+			Public: nestri.F(true),
+		})
 		if err == nil {
 			t.Error("expected there to be a deadline error")
 		}
