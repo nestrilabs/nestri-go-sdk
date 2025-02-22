@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/nestrilabs/nestri-go-sdk@v0.1.0-alpha.11'
+go get -u 'github.com/nestrilabs/nestri-go-sdk@v0.1.0-alpha.12'
 ```
 
 <!-- x-release-please-end -->
@@ -52,7 +52,7 @@ func main() {
 	client := nestri.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("NESTRI_API_KEY")
 	)
-	user, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	user, err := client.Users.Get(context.TODO())
 	if err != nil {
 		panic(err.Error())
 	}
@@ -145,7 +145,7 @@ client := nestri.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Users.Get(context.TODO(), ...,
+client.Tasks.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,14 +174,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Users.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+_, err := client.Tasks.Get(context.TODO(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 if err != nil {
 	var apierr *nestri.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/users/{id}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/tasks/{id}": 400 Bad Request { ... }
 }
 ```
 
@@ -199,7 +199,7 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Users.Get(
+client.Tasks.Get(
 	ctx,
 	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
 	// This sets the per-retry timeout
@@ -235,11 +235,33 @@ client := nestri.NewClient(
 )
 
 // Override per-request:
-client.Users.Get(
+client.Tasks.Get(
 	context.TODO(),
 	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
 	option.WithMaxRetries(5),
 )
+```
+
+### Accessing raw response data (e.g. response headers)
+
+You can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when
+you need to examine response headers, status codes, or other details.
+
+```go
+// Create a variable to store the HTTP response
+var response *http.Response
+task, err := client.Tasks.Get(
+	context.TODO(),
+	"faa29bba-c96e-494c-89b0-1f1ec9b87376",
+	option.WithResponseInto(&response),
+)
+if err != nil {
+	// handle error
+}
+fmt.Printf("%+v\n", task)
+
+fmt.Printf("Status Code: %d\n", response.StatusCode)
+fmt.Printf("Headers: %+#v\n", response.Header)
 ```
 
 ### Making custom/undocumented requests
