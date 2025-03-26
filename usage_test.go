@@ -27,6 +27,7 @@ func TestUsage(t *testing.T) {
 	user, err := client.Users.Get(context.TODO())
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	t.Logf("%+v\n", user.Data)
 }
