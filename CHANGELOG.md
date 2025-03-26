@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2025-03-26)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#63](https://github.com/nestrilabs/nestri-go-sdk/issues/63)) ([dd956b3](https://github.com/nestrilabs/nestri-go-sdk/commit/dd956b32ed8d8cd73572c1f973f41e51cc768bbb))
+* **api:** Return users/[@me](https://github.com/me) ([#51](https://github.com/nestrilabs/nestri-go-sdk/issues/51)) ([07a5a6a](https://github.com/nestrilabs/nestri-go-sdk/commit/07a5a6a5f624b6b33128b30cdbb62aaa3bfef8fe))
+* **api:** Return users/[@me](https://github.com/me) ([#53](https://github.com/nestrilabs/nestri-go-sdk/issues/53)) ([8a0e304](https://github.com/nestrilabs/nestri-go-sdk/commit/8a0e304595f8afb67ca954903ad6aa7c98731361))
+* **client:** accept RFC6838 JSON content types ([#64](https://github.com/nestrilabs/nestri-go-sdk/issues/64)) ([5e84a05](https://github.com/nestrilabs/nestri-go-sdk/commit/5e84a05780f17a5a341739b050076aaf224f8b71))
+* **client:** allow custom baseurls without trailing slash ([#62](https://github.com/nestrilabs/nestri-go-sdk/issues/62)) ([d466713](https://github.com/nestrilabs/nestri-go-sdk/commit/d46671322d9d377e285e70f59326b4836a28b66c))
+* **client:** improve default client options support ([#66](https://github.com/nestrilabs/nestri-go-sdk/issues/66)) ([9d06d72](https://github.com/nestrilabs/nestri-go-sdk/commit/9d06d728be5f96ef658574b92c27ba02fb8fc2cc))
+* **client:** send `X-Stainless-Timeout` header ([#55](https://github.com/nestrilabs/nestri-go-sdk/issues/55)) ([79a7e25](https://github.com/nestrilabs/nestri-go-sdk/commit/79a7e2546889a7af4073026a4cdfc7297e4d26a1))
+
+
+### Bug Fixes
+
+* **client:** don't truncate manually specified filenames ([#59](https://github.com/nestrilabs/nestri-go-sdk/issues/59)) ([f3ac9ec](https://github.com/nestrilabs/nestri-go-sdk/commit/f3ac9ec964304328e70495cd88a016f39f559c88))
+* do not call path.Base on ContentType ([#58](https://github.com/nestrilabs/nestri-go-sdk/issues/58)) ([3e365d3](https://github.com/nestrilabs/nestri-go-sdk/commit/3e365d39fb4fb3b1c9eaab1f6e826d43e2cf3819))
+* fix early cancel when RequestTimeout is provided for streaming requests ([#57](https://github.com/nestrilabs/nestri-go-sdk/issues/57)) ([82ab1a2](https://github.com/nestrilabs/nestri-go-sdk/commit/82ab1a2d10e7cc487a6a7fdc3d1c19a879295f3a))
+* **test:** return early after test failure ([#70](https://github.com/nestrilabs/nestri-go-sdk/issues/70)) ([ccdb373](https://github.com/nestrilabs/nestri-go-sdk/commit/ccdb373f7d88f229c1c8d0ded51b3bbd44b51de7))
+
+
+### Chores
+
+* add request options to client tests ([#69](https://github.com/nestrilabs/nestri-go-sdk/issues/69)) ([e38ee3a](https://github.com/nestrilabs/nestri-go-sdk/commit/e38ee3afb56c609d9fe1beef235a87a741ea66d6))
+* add UnionUnmarshaler for responses that are interfaces ([#56](https://github.com/nestrilabs/nestri-go-sdk/issues/56)) ([e6fa12b](https://github.com/nestrilabs/nestri-go-sdk/commit/e6fa12bead052189ea3dd036459ea4a2b1a975d4))
+* **docs:** improve security documentation ([#68](https://github.com/nestrilabs/nestri-go-sdk/issues/68)) ([24c5267](https://github.com/nestrilabs/nestri-go-sdk/commit/24c5267cee955b10bbd32e57eb2e361e7fe26cc7))
+* **internal:** codegen related update ([#54](https://github.com/nestrilabs/nestri-go-sdk/issues/54)) ([0813354](https://github.com/nestrilabs/nestri-go-sdk/commit/0813354ef8f04f52a7da2b2fdf93ebeea6a48011))
+* **internal:** fix devcontainers setup ([#60](https://github.com/nestrilabs/nestri-go-sdk/issues/60)) ([a8dd0ac](https://github.com/nestrilabs/nestri-go-sdk/commit/a8dd0acd099ebdc536ded7cdb1ef4553d7f90274))
+* **internal:** remove extra empty newlines ([#67](https://github.com/nestrilabs/nestri-go-sdk/issues/67)) ([e20444c](https://github.com/nestrilabs/nestri-go-sdk/commit/e20444c25bc334c2334d0ba7a32dce31b8a0c272))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#61](https://github.com/nestrilabs/nestri-go-sdk/issues/61)) ([7fffb3e](https://github.com/nestrilabs/nestri-go-sdk/commit/7fffb3e085060cc0a8d6aa24eb13c2d6f8fea686))
+
+
+### Refactors
+
+* tidy up dependencies ([#65](https://github.com/nestrilabs/nestri-go-sdk/issues/65)) ([ef1366c](https://github.com/nestrilabs/nestri-go-sdk/commit/ef1366c23ea2eb0fd26be3a0dedf38875ba2b1dd))
+
 ## 0.1.0-alpha.11 (2025-02-01)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/nestrilabs/nestri-go-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)

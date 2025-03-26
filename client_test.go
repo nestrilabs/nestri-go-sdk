@@ -26,6 +26,7 @@ func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 func TestUserAgentHeader(t *testing.T) {
 	var userAgent string
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -37,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	client.Tasks.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if userAgent != fmt.Sprintf("Nestri/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -46,6 +47,7 @@ func TestUserAgentHeader(t *testing.T) {
 func TestRetryAfter(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -60,7 +62,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -79,6 +81,7 @@ func TestRetryAfter(t *testing.T) {
 func TestDeleteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -94,7 +97,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -108,6 +111,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 func TestOverwriteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -123,7 +127,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -137,6 +141,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 func TestRetryAfterMs(t *testing.T) {
 	attempts := 0
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -151,7 +156,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(context.Background(), "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -162,6 +167,7 @@ func TestRetryAfterMs(t *testing.T) {
 
 func TestContextCancel(t *testing.T) {
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -173,7 +179,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Users.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -181,6 +187,7 @@ func TestContextCancel(t *testing.T) {
 
 func TestContextCancelDelay(t *testing.T) {
 	client := nestri.NewClient(
+		option.WithBearerToken("My Bearer Token"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -192,7 +199,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Users.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+	_, err := client.Tasks.Get(cancelCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 	if err == nil {
 		t.Error("expected there to be a cancel error")
 	}
@@ -208,6 +215,7 @@ func TestContextDeadline(t *testing.T) {
 
 	go func() {
 		client := nestri.NewClient(
+			option.WithBearerToken("My Bearer Token"),
 			option.WithHTTPClient(&http.Client{
 				Transport: &closureTransport{
 					fn: func(req *http.Request) (*http.Response, error) {
@@ -217,7 +225,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Users.Get(deadlineCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
+		_, err := client.Tasks.Get(deadlineCtx, "faa29bba-c96e-494c-89b0-1f1ec9b87376")
 		if err == nil {
 			t.Error("expected there to be a deadline error")
 		}
